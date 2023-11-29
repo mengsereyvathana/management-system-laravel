@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BrandResource\Pages;
 use App\Models\Brand;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Group;
@@ -87,28 +89,38 @@ class BrandResource extends Resource
     {
         return $table
             ->columns([
-                // TextColumn::make('name')
-                //     ->searchable()
-                //     ->sortable(),
-                // TextColumn::make('url')
-                //     ->searchable()
-                //     ->sortable()
-                //     ->label('Website URL'),
-                // TextColumn::make('primary_hex')
-                //     ->label('Primary Color'),
-                // IconColumn::make('is_visible')
-                //     ->boolean()
-                //     ->sortable()
-                //     ->label('Visibility'),
-                // TextColumn::make('updated_at')
-                //     ->date()
-                //     ->sortable()
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('url')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Website URL'),
+                TextColumn::make('primary_hex')
+                    ->label('Primary Color'),
+                IconColumn::make('is_visible')
+                    ->boolean()
+                    ->sortable()
+                    ->label('Visibility'),
+                TextColumn::make('updated_at')
+                    ->date()
+                    ->sortable()
             ])
             ->filters([
                 //
             ])
+            // ->actions([
+            //     Tables\Actions\ViewAction::make(),
+            //     Tables\Actions\EditAction::make(),
+            //     Tables\Actions\DeleteAction::make(),
+            // ])
+
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
