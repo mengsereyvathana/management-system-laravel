@@ -16,7 +16,7 @@ class Order extends Model
         'customer_id', 'number', 'total_price', 'status', 'shipping_price', 'notes'
     ];
 
-    //a order can have a user (a order made by a user)
+    //a order can have a user (a order is made by a user)
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
