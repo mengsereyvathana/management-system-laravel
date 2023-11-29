@@ -33,8 +33,8 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    // product (many to many)
-    // a category can have manys products
+    // relationship between category and product (many to many)
+    // a category can have many products and a product can have many categories
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
