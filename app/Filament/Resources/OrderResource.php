@@ -92,6 +92,12 @@ class OrderResource extends Resource
                                         ->dehydrated()
                                         ->numeric()
                                         ->required(),
+
+                                    Placeholder::make('total_price')
+                                        ->label('Total Price')
+                                        ->content(function ($get) {
+                                            return $get('quantity') * $get('unit_price');
+                                        })
                                 ])->columns(4)
                         ])
                 ])->columnSpanFull()
