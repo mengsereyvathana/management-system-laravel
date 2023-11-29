@@ -1,0 +1,1 @@
+<img src=" {{ asset('images/cafe.png') }} " alt="Logo" class="h-16">
