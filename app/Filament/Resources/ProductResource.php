@@ -25,6 +25,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
@@ -39,6 +40,44 @@ class ProductResource extends Resource
     protected static ?string $navigationGroup = 'Shop';
 
     protected static ?int $navigationSort = 0;
+
+    // add badge
+    public static function getNavigationBadge(): ?string {
+        return static::getModel()::count();
+    }
+
+    //activeNavIcon
+    protected static ?string $activeNavigationIcon = 'heroicon-o-check-badge';
+
+    //limit search items
+    protected static int $globalSearchResultsLimit = 20;
+
+    //global search by name
+    protected static ?string $recordTitleAttribute = 'name';
+
+    //override $recordTitleAttribute make it search by list of array
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'name',
+            'slug',
+            'description'
+        ];
+    }
+
+    //override detail of search
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'brand' => $record->brand->name,
+        ];
+    }
+
+    //good for query
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['brand']);
+    }
 
     public static function form(Form $form): Form
     {
