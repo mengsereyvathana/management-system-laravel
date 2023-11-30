@@ -26,15 +26,15 @@ class StatsOverview extends BaseWidget
                 ->color('success')
                 ->chart([7,3,4,5,6,3,5,3]),
              Stat::make('Total Products', Product::count())
-                 ->description('Total products in app')
-                 ->descriptionIcon('heroicon-m-arrow-trending-down')
-                 ->color('danger')
-                 ->chart([7, 3, 4, 5, 6, 3, 5, 3]),
+                 ->description('Total products in app'),
+//                 ->descriptionIcon('heroicon-m-arrow-trending-down')
+//                 ->color('danger')
+//                 ->chart([7, 3, 4, 5, 6, 3, 5, 3]),
             Stat::make('Pending Orders', Order::where('status', OrderStatusEnum::PENDING->value)->count())
                 ->description('Total pending orders')
-                ->descriptionIcon('heroicon-m-arrow-trending-down')
-                ->color('danger')
-                ->chart([7, 3, 4, 5, 6, 3, 5, 3]),
+//                ->descriptionIcon('heroicon-m-arrow-trending-down')
+//                ->color('danger')
+//                ->chart([7, 3, 4, 5, 6, 3, 5, 3]),
         ];
     }
 }

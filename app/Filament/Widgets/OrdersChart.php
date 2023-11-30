@@ -20,11 +20,13 @@ class OrdersChart extends ChartWidget
             ->pluck('count', 'status')
             ->toArray();
 
+//        dd($data);
+
         return [
             'datasets' => [
                 [
                     'label' => 'Orders',
-                    'data' => array_values($data)
+                    'data' => $data
                 ]
             ],
             'labels' => OrderStatusEnum::cases()
