@@ -108,6 +108,7 @@ class ProductResource extends Resource
                             ->schema([
                                 FileUpload::make('image')
                                     ->directory('form-attachments')
+                                    ->storeFileNamesIn('original_filename')
                                     ->preserveFilenames()
                                     ->image()
                                     ->imageEditor()
