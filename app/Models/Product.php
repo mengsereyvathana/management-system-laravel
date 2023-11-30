@@ -25,6 +25,7 @@ class Product extends Model
     //a product can have many categories and a category can have many products
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class)->withTimestamps(); // withTimestamps() allows for tracking when the relationship was created or updated
+        return $this->belongsToMany(Category::class);
+            //->withTimestamps(); // withTimestamps() allows for tracking when the relationship was created or updated
     }
 }

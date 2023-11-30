@@ -65,7 +65,7 @@ class OrderResource extends Resource
                                 ->numeric()
                                 ->required(),
 
-                            Select::make('type')
+                            Select::make('status')
                                 ->options([
                                     'pending' => OrderStatusEnum::PENDING->value,
                                     'processing' => OrderStatusEnum::PROCESSING->value,
@@ -102,11 +102,13 @@ class OrderResource extends Resource
                                         ->dehydrated()
                                         ->numeric()
                                         ->required(),
-
-//                                    TextInput::make('total_price')
-//                                        ->label('Total Price')
-
-                                ])->columns(3)
+                                    // the field or column does not exist
+                                    Placeholder::make('total_price')
+                                        ->label('Total Price')
+                                        ->content(function ($get){
+                                            return $get('quantity') * $get('unit_price');
+                                    })
+                                ])->columns(4)
                         ])
                 ])->columnSpanFull()
             ]);
