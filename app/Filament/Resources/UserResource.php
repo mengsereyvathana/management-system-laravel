@@ -3,26 +3,33 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Resources\Pages\CreateRecord;
+use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?string $navigationGroup = 'User Settings';
 
     public static function form(Form $form): Form
     {
@@ -38,13 +45,26 @@ class UserResource extends Resource
                                 TextInput::make('email')
                                     ->required()
                                     ->maxLength(255)
-                                    ->unique(),
+                                    ->unique(ignoreRecord: true),
                                 DatePicker::make('email_verified_at'),
                                 TextInput::make('password')
-                                    ->required()
                                     ->maxLength(255)
+                                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                                    ->dehydrated(fn ($state) => filled($state))
+                                    ->required(fn (Page $livewire) => ($livewire instanceof CreateUser))
                             ])->columns(2)
-                    ])->columnSpanFull(),
+                    ]),
+
+                Group::make()
+                    ->schema([
+                        Section::make('Association')
+                            ->schema([
+                                Select::make('roles')
+                                    ->multiple()
+                                    ->relationship('roles', 'name')
+                                    ->preload()
+                            ])
+                    ])
             ]);
     }
 
@@ -57,10 +77,14 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('email')
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('email_verified_at')
+                    ->searchable()
                     ->sortable()
-//                TextColumn::make('updated_at')
-//                    ->date()
-//                    ->sortable()
+                    ->date(),
+                TextColumn::make('created_at')
+                    ->date()
+                    ->sortable()
             ])
             ->filters([
                 //

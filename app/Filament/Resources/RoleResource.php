@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Product;
+use App\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\MarkdownEditor;
@@ -21,13 +22,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 
 class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-finger-print';
+
+    protected static ?string $navigationGroup = 'User Settings';
 
     public static function form(Form $form): Form
     {
@@ -39,16 +41,19 @@ class RoleResource extends Resource
                             ->schema([
                                 TextInput::make('name')
                                     ->required()
-                                    ->unique(),
+                                    ->unique(ignoreRecord: true),
                             ])
                     ]),
-//                Group::make()
-//                    ->schema([
-//                        Section::make('Status')
-//                            ->schema([
-//
-//                            ]),
-//                    ])
+                Group::make()
+                    ->schema([
+                        Section::make('Associations')
+                            ->schema([
+                                Select::make('permissions')
+                                ->multiple()
+                                ->relationship('permissions', 'name')
+                                ->preload()
+                            ]),
+                    ])
             ]);
     }
 
@@ -59,13 +64,9 @@ class RoleResource extends Resource
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-//                TextColumn::make('url')
-//                    ->searchable()
-//                    ->sortable()
-//                    ->label('Website URL'),
-//                TextColumn::make('updated_at')
-//                    ->date()
-//                    ->sortable()
+                TextColumn::make('created_at')
+                    ->date()
+                    ->sortable()
             ])
             ->filters([
                 //
@@ -98,5 +99,10 @@ class RoleResource extends Resource
             'create' => Pages\CreateRole::route('/create'),
             'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('name', '!=', 'Admin');
     }
 }
