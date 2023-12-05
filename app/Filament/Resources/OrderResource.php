@@ -38,9 +38,9 @@ class OrderResource extends Resource
         return static::getModel()::where('status','=','processing')->count() > 10 ? 'warning' : 'primary';
     }
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationGroup = 'Report';
 
     public static function form(Form $form): Form
     {

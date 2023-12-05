@@ -50,7 +50,7 @@ class User extends Authenticatable implements FilamentUser
     //the only user can access to admin
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasRole(['Admin', 'Product Manager', 'Moderator']);
+        return $this->hasRole(['Admin', 'Product Manager', 'Moderator', 'Customer', 'Report Manager']);
 //        return str_ends_with($this->email, '@gmail.com') && $this->hasVerifiedEmail();
     }
 }
