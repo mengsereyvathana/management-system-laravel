@@ -75,4 +75,9 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     {
         return $this->teams->contains($tenant);
     }
+
+    public function hasPermission(string $permission): bool
+    {
+        return $this->hasPermissionTo($permission);
+    }
 }

@@ -13,7 +13,7 @@ class BrandPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasAllPermissions(['Create Products', 'View Products', 'Edit Products', 'Delete Products'])){
+        if($user->hasAllPermissions(['Create Brands', 'View Brands', 'Edit Brands', 'Delete Brands'])){
             return true;
         }
         return false;
@@ -68,7 +68,7 @@ class BrandPolicy
      */
     public function restore(User $user, Brand $brand): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -76,6 +76,6 @@ class BrandPolicy
      */
     public function forceDelete(User $user, Brand $brand): bool
     {
-        //
+        return false;
     }
 }
