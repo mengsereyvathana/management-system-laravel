@@ -8,18 +8,14 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
+    private string $modelName = 'products';
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-//        if($user->hasRole(['Admin', 'Moderator', 'Product Manager']) || $user->hasPermissionTo('Create Post')){
-//            return true;
-//        }
-//        return false;
-
-        //Best practice
-        if($user->hasPermissionTo('View Products')){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;
@@ -30,7 +26,7 @@ class ProductPolicy
      */
     public function view(User $user, Product $product): bool
     {
-        if($user->hasPermissionTo('View Products')){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;
@@ -41,7 +37,7 @@ class ProductPolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create Products')){
+        if($user->hasPermissionTo('create '. $this->modelName)){
             return true;
         }
         return false;
@@ -52,7 +48,7 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
-        if($user->hasPermissionTo('Update Products')){
+        if($user->hasPermissionTo('update '. $this->modelName)){
             return true;
         }
         return false;
@@ -63,7 +59,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product): bool
     {
-        if($user->hasPermissionTo('Delete Products')){
+        if($user->hasPermissionTo('delete '. $this->modelName)){
             return true;
         }
         return false;

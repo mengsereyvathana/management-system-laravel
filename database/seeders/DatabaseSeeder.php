@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(RolesAndPermissionsSeeder::class);
         // \App\Models\User::factory(10)->create();
 
 //         $user1 = User::factory()->create([
@@ -26,10 +27,10 @@ class DatabaseSeeder extends Seeder
 //             'email' => 'test@filament.com',
 //         ]);
 //
-        $user1 = User::
+//        $user1 = User::
 
-         $role = Role::create(['name' => 'Admin']);
+//         $role = Role::create(['name' => 'Admin']);
 
-         $user1->assignRole($role);
+//         $user1->assignRole($role);
     }
 }

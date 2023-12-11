@@ -27,6 +27,9 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationGroup = 'Report';
 
+    //disable tenancy
+    protected static bool $isScopedToTenant = false;
+
     public static function form(Form $form): Form
     {
         return $form

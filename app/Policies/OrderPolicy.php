@@ -8,12 +8,13 @@ use Illuminate\Auth\Access\Response;
 
 class OrderPolicy
 {
+    private string $modelName = 'orders';
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('View Orders')){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;
@@ -24,7 +25,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order): bool
     {
-        if($user->hasPermissionTo('View Orders')){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;
@@ -33,31 +34,31 @@ class OrderPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
-    {
-        if($user->hasPermissionTo('View Orders')){
-            return true;
-        }
-        return false;
-    }
+//    public function create(User $user): bool
+//    {
+//        if($user->hasPermissionTo('create '. $this->modelName)){
+//            return true;
+//        }
+//        return false;
+//    }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Order $order): bool
-    {
-        if($user->hasPermissionTo('View Orders')){
-            return true;
-        }
-        return false;
-    }
+//    public function update(User $user, Order $order): bool
+//    {
+//        if($user->hasPermissionTo('update '. $this->modelName)){
+//            return true;
+//        }
+//        return false;
+//    }
 
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Order $order): bool
     {
-        if($user->hasPermissionTo('View Orders')){
+        if($user->hasPermissionTo('delete '. $this->modelName)){
             return true;
         }
         return false;

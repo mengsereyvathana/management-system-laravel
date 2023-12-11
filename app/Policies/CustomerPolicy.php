@@ -8,12 +8,14 @@ use Illuminate\Auth\Access\Response;
 
 class CustomerPolicy
 {
+
+    private string $modelName = 'customers';
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasPermissionTo('View Customers')){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;
@@ -24,7 +26,7 @@ class CustomerPolicy
      */
     public function view(User $user, Customer $customer): bool
     {
-        if($user->hasPermissionTo('View Customers')){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;

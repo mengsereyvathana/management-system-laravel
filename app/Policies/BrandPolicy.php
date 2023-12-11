@@ -8,12 +8,14 @@ use Illuminate\Auth\Access\Response;
 
 class BrandPolicy
 {
+    private string $modelName = 'brands';
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        if($user->hasAllPermissions(['Create Brands', 'View Brands', 'Edit Brands', 'Delete Brands'])){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;
@@ -24,7 +26,7 @@ class BrandPolicy
      */
     public function view(User $user, Brand $brand): bool
     {
-        if($user->hasPermissionTo('Create Products')){
+        if($user->hasPermissionTo('view '. $this->modelName)){
             return true;
         }
         return false;
@@ -35,7 +37,7 @@ class BrandPolicy
      */
     public function create(User $user): bool
     {
-        if($user->hasPermissionTo('Create Products')){
+        if($user->hasPermissionTo('create '. $this->modelName)){
             return true;
         }
         return false;
@@ -46,7 +48,7 @@ class BrandPolicy
      */
     public function update(User $user, Brand $brand): bool
     {
-        if($user->hasPermissionTo('Create Products')){
+        if($user->hasPermissionTo('update '. $this->modelName)){
             return true;
         }
         return false;
@@ -55,9 +57,9 @@ class BrandPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Brand $brand): bool
+    public function delete(User $user, Product $product): bool
     {
-        if($user->hasPermissionTo('Create Products')){
+        if($user->hasPermissionTo('delete '. $this->modelName)){
             return true;
         }
         return false;

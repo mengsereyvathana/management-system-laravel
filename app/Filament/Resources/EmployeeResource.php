@@ -32,6 +32,8 @@ class EmployeeResource extends Resource
         return static::getModel()::count();
     }
 
+    protected static ?string $navigationGroup = 'Employee Management';
+
     public static function form(Form $form): Form
     {
         return $form

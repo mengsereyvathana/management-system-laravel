@@ -31,6 +31,9 @@ class RoleResource extends Resource
 
     protected static ?string $navigationGroup = 'User Settings';
 
+    //disable tenancy
+    protected static bool $isScopedToTenant = false;
+
     public static function form(Form $form): Form
     {
         return $form

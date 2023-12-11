@@ -83,8 +83,6 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
             ])
 
-//            ->tenant(Team::class)
-//            ->tenantRegistration(RegisterTeam::class)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -98,10 +96,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
-
-//            ->tenant(Team::class, slugAttribute: 'slug', ownershipRelationship: 'team')
-//            ->tenantRegistration(RegisterTeam::class)
-//            ->tenantProfile(EditTeamProfile::class);
+            ])
+            //multi tenancy
+            ->tenant(Team::class, slugAttribute: 'slug', ownershipRelationship: 'team')
+            ->tenantRegistration(RegisterTeam::class)
+            ->tenantProfile(EditTeamProfile::class);
     }
 }

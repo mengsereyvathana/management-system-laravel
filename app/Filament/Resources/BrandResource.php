@@ -32,6 +32,8 @@ class BrandResource extends Resource
 
     protected static ?string $navigationGroup = 'Product Management';
 
+    //disable tenancy
+    protected static bool $isScopedToTenant = false;
 
     public static function form(Form $form): Form
     {
