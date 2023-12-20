@@ -37,8 +37,13 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->colors([
                 'primary' => '#6521AF',
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
-            ->font('Poppins')
+            ->font('Montserrat')
             ->favicon('images/favicon.png')
             ->userMenuItems([
                 MenuItem::make()
