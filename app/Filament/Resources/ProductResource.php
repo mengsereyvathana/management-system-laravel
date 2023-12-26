@@ -61,7 +61,7 @@ class ProductResource extends Resource
         return [
             'name',
             'slug',
-            'description'
+            'description',
         ];
     }
 
@@ -150,7 +150,7 @@ class ProductResource extends Resource
                             ->schema([
                                 FileUpload::make('image')
                                     ->directory('form-attachments')
-//                                    ->storeFileNamesIn('original_filename')
+//                                    ->storeFileNamesIn()
                                     ->preserveFilenames()
                                     ->image()
                                     ->imageEditor()
